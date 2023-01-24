@@ -1,0 +1,170 @@
+1.Binary tree inorder traversal in leetcode
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        ArrayList<Integer>ls = new ArrayList<>();
+        Traverse(root,ls);
+        return ls;
+    }
+        void Traverse(TreeNode root,ArrayList<Integer> ls){
+            if(root == null){
+                return;
+            }
+            Traverse(root.left,ls);
+            ls.add(root.val);
+            Traverse(root.right,ls);
+        }
+    
+}
+
+............................
+
+2.Binary tree preorder traversal in leetcode
+class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
+        ArrayList<Integer> ls = new ArrayList<>();
+        Traverse(root,ls);
+        return ls;
+    }
+    void Traverse(TreeNode root,ArrayList<Integer> ls){
+        if(root == null){
+            return ;
+        }
+        ls.add(root.val);
+        Traverse(root.left,ls);
+        Traverse(root.right,ls);
+
+    }
+}
+
+............................
+
+3.Binary tree postorder traversal in leetcode
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        ArrayList<Integer> ls = new ArrayList<>();
+        Traverse(root,ls);
+        return ls;
+    }
+    void Traverse(TreeNode root,ArrayList<Integer> ls){
+        if(root == null){
+            return ;
+        }
+        
+        Traverse(root.left,ls);
+        Traverse(root.right,ls);
+        ls.add(root.val);
+        
+    }
+}
+
+............................
+
+4.Same tree in leetcode 
+class Solution {
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if(p==null && q==null){
+            return true;
+        }
+        if(p==null || q==null){
+            return false;
+        }
+        
+        if(p.val!=q.val){
+            return false;
+        }
+        return isSameTree(p.left,q.left) && isSameTree(p.right,q.right);
+        
+
+        }
+        
+    
+}
+
+
+...............................
+
+5.Maximum depth of binary tree in leetcode
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if(root == null){
+            return 0;
+        }
+        int left = maxDepth(root.left);
+        int right = maxDepth(root.right);
+        return Math.max(left,right)+1;
+        
+    }
+}
+
+.............................
+
+6.Minimum depth in binary tree in leetcode
+class Solution {
+    public int minDepth(TreeNode root) {
+        if(root==null){
+            return 0;
+        }
+        int left = minDepth(root.left);
+        int right = minDepth(root.right);
+        if(left>0 && right>0 ){ 
+            return Math.min(left,right)+1;
+        }
+        else {
+            return Math.max(left,right)+1;
+        }
+
+
+        
+    }
+}
+
+..............................
+7.Subtree of Another tree in leetcode
+class Solution {
+    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+        if(root==null){
+            return false;
+        }
+        if(Same(root,subRoot)){
+            return true;
+        }
+        return isSubtree(root.left,subRoot) || isSubtree(root.right,subRoot);
+        }
+        private boolean Same(TreeNode root,TreeNode subRoot){
+            if(root == null  && subRoot==null){
+                return true;
+            }
+            if(root == null || subRoot == null){
+                return false;
+            }
+            if(root.val!=subRoot.val){
+                return false;
+            }
+            return Same(root.left,subRoot.left) && Same(root.right,subRoot.right);
+            
+        }
+}
+
+.....................................
+
+8.Longest Substring without repeating characters in leetcode
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int count=0;
+        int i=0,j=0;
+        HashSet<Character> set = new HashSet<>();
+        while(i<s.length()){
+            char ch = s.charAt(i);
+            while(set.contains(ch)){
+                set.remove(s.charAt(j));
+                j++;
+            }
+            set.add(ch);
+            count=Math.max(count,i-j+1);
+            i++;
+        }
+        return count;
+        
+       
+    }
+}
