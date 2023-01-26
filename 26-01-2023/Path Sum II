@@ -1,0 +1,25 @@
+class Solution {
+    List<List<Integer>>path = new ArrayList<>();
+    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+        if(root == null){
+            return  path;
+        }
+        track(root,targetSum,new ArrayList<>());
+        return path;
+        
+    }
+    void track(TreeNode root,int targetSum ,ArrayList<Integer> res){
+        if(root==null){
+            return ;
+        }
+        res.add(root.val);
+        targetSum-=root.val;
+
+        if(targetSum==0 && root.left==null && root.right==null){
+                path.add(res);
+        }
+        track( root.left,targetSum,new ArrayList<>(res));
+        track( root.right,targetSum,new ArrayList<>(res));
+    }
+}
+Console
