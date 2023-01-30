@@ -1,0 +1,25 @@
+class Solution {
+    int sum1;
+    public int sumRootToLeaf(TreeNode root) {
+        String s = "";
+        sum(root,s);
+        return sum1;
+        }
+        public void sum(TreeNode root,String val){
+            if(root==null){
+                return ;
+            }
+            val+=root.val;
+            
+            if(root.left==null && root.right==null){
+                
+                sum1+=Integer.parseInt(val,2);
+                return;
+            }
+            
+            sum(root.left,val);
+            sum(root.right,val);
+        
+    }
+   
+}
