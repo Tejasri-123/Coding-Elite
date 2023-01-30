@@ -1,0 +1,20 @@
+class Solution {
+    public TreeNode bstFromPreorder(int[] preorder) {
+
+        return bstFromPreorder(preorder,Integer.MAX_VALUE,new int[]{0});
+        
+    }
+    TreeNode bstFromPreorder(int[] preorder,int bound,int[] curr){
+        if (curr[0] == preorder.length ) {
+            return null;
+        }
+        if(preorder[curr[0]]>bound){
+            return null;
+        }
+
+        TreeNode root = new TreeNode(preorder[curr[0]++]);
+        root.left = bstFromPreorder(preorder,root.val,curr);
+        root.right = bstFromPreorder(preorder,bound,curr);
+        return root;
+    }
+}
