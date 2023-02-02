@@ -1,0 +1,43 @@
+class Solution {
+    public void recoverTree(TreeNode root) {
+        ArrayList<Integer> arr = new ArrayList<>();
+
+        Inorder(root,arr);
+
+        int first = 0;
+        int second = 0;
+        int prev = arr.get(0);
+
+        for(int i =1 ;i<arr.size();i++){
+            if(prev>arr.get(i) && first==0)
+                first = prev;
+            if(prev>arr.get(i) && first!=0)
+                second = arr.get(i);
+
+            prev = arr.get(i);
+        }
+        update(root,first,second);
+        
+    }
+   void Inorder(TreeNode root,ArrayList<Integer> arr){
+        if(root == null){
+            return ;
+        }
+        Inorder(root.left,arr);
+        arr.add(root.val);
+        Inorder(root.right,arr);
+    }
+    public void update(TreeNode root,int val1, int val2){
+        if(root == null)
+            return;
+
+        update(root.left,val1,val2);
+        if(root.val == val1){
+            root.val = val2;
+        }
+        else if(root.val == val2){
+            root.val = val1;
+        }
+        update(root.right,val1,val2);
+    }
+}
