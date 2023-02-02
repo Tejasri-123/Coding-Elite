@@ -1,0 +1,44 @@
+class Solution {
+    public int[] findMode(TreeNode root) {
+        ArrayList<Integer> arr = new ArrayList<>();
+       HashMap<Integer,Integer> hmap = new HashMap<>();
+        inorder(root,arr);
+        for(int i=0;i<arr.size();i++){
+            hmap.merge(arr.get(i),1,Integer::sum);
+        }
+        int max1 = 0;
+        int max = 0;
+        int count = 1;
+        for(Map.Entry<Integer,Integer> map1:hmap.entrySet()){
+            if (max<map1.getValue()){
+                max1 = map1.getValue();
+                count=1;
+            }
+            else if(  map1.getValue()== max1){
+                count+=1;
+            }
+            max = max1;
+        }
+        int[] ary = new int[count];
+        int j=0;
+        for(Map.Entry<Integer,Integer> map2:hmap.entrySet()){
+            if(map2.getValue()==max1){
+                ary[j]=map2.getKey();
+                j++;
+            }
+        }
+
+       return ary; 
+   }
+     void inorder(TreeNode root, ArrayList<Integer> arr){
+        if(root == null){
+            return;
+        }
+        inorder(root.left, arr);
+        arr.add(root.val);
+        inorder(root.right, arr);
+    }
+
+        
+    
+}
