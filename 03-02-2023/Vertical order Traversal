@@ -1,0 +1,52 @@
+class Solution {
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        ArrayList<List<Integer>> ls = new ArrayList<>();
+        class pairs{
+            TreeNode node;
+            int off;
+            int lv;
+        
+        pairs(TreeNode node,int off,int lv){
+            this.node = node;
+            this.off = off;
+            this.lv = lv;
+        }
+        }
+        Queue<pairs> queue = new LinkedList<>();
+        TreeMap<Integer,TreeMap<Integer,PriorityQueue<Integer>>> map = new TreeMap();
+        queue.add(new pairs(root,0,0));
+        while(!queue.isEmpty()){
+            pairs it = queue.poll();
+            TreeNode temp = it.node;
+            int off = it.off;
+            int lv = it.lv;
+            if(!map.containsKey(off)){
+                map.put(off,new TreeMap<>());
+            }
+            if(!map.get(off).containsKey(lv)){
+                map.get(off).put(lv,new PriorityQueue<>());
+            }
+            map.get(off).get(lv).add(temp.val);
+            if(temp.left!=null){
+                queue.add(new pairs(temp.left,off-1,lv+1));
+            }
+            if(temp.right!=null){
+                queue.add(new pairs(temp.right,off+1,lv+1));
+            }
+        }
+        for(Map.Entry<Integer,TreeMap<Integer,PriorityQueue<Integer>>> res : map.entrySet()){
+            ArrayList<Integer> arr = new ArrayList<>();
+            TreeMap<Integer ,PriorityQueue<Integer>> map2 = res.getValue();
+            for(Map.Entry<Integer,PriorityQueue<Integer>>res2:map2.entrySet()){
+                PriorityQueue<Integer> que = res2.getValue();
+                while(!que.isEmpty()){
+                    arr.add(que.poll());
+                }
+            }
+            ls.add(arr);
+        }
+        
+return ls;
+        
+    }
+}
