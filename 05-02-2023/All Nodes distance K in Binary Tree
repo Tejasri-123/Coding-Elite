@@ -1,0 +1,67 @@
+class pair{
+    TreeNode node;
+    int num;
+
+    pair(TreeNode node,int num){
+        this.node = node;
+        this.num = num;
+    }
+}
+class Solution {
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+        
+        
+        ArrayList<Integer> arr = new ArrayList<>();
+        if(root==null){
+            return null;
+        }
+        Queue<pair>queue = new LinkedList<>();
+        HashMap<TreeNode,TreeNode> nmap = new HashMap<>();
+        Roots(root,nmap);
+        queue.add(new pair(target,0));
+        
+        
+        HashSet<TreeNode> hs = new HashSet<TreeNode>();
+        hs.add(target);
+        while(!queue.isEmpty()){
+            pair it = queue.poll();
+            TreeNode temp = it.node;
+            int num = it.num;
+            if(num==k){
+                arr.add(temp.val);
+            }
+            else if(num>k){
+                break;
+            }
+            if(temp.left!=null && hs.add(temp.left)){
+                queue.add(new pair(temp.left,num+1));
+                hs.add(temp.left);
+            }
+            if(temp.right!=null && hs.add(temp.right)){
+                queue.add(new pair(temp.right,num+1));
+                hs.add(temp.right);
+            }
+            if(nmap.containsKey(temp) && hs.add(nmap.get(temp))){
+                queue.add(new pair(nmap.get(temp),num+1));
+                hs.add(nmap.get(temp));
+            }
+
+        }
+         
+        
+        return arr; 
+    }
+    public void Roots(TreeNode root,HashMap<TreeNode,TreeNode> hmap){
+            if(root==null){
+                return;
+            }
+            if(root.left!=null){
+                hmap.put(root.left,root);
+                Roots(root.left,hmap);
+            }
+            if(root.right!=null){
+                hmap.put(root.right,root);
+                Roots(root.right,hmap);
+            }
+        }
+}
