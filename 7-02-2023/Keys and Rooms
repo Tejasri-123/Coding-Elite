@@ -1,0 +1,23 @@
+class Solution {
+
+    public boolean canVisitAllRooms(List<List<Integer>> rooms) {
+        boolean[] visit = new boolean[rooms.size()];
+        dfs(0,rooms,visit);
+        for(int i =0;i<rooms.size();i++){
+            if(!visit[i])
+                return false;
+        }
+        return true;
+        
+    }
+    public void dfs(int key,List<List<Integer>> rooms,boolean[] visit){
+        visit[key] = true;
+        for(int neigh:rooms.get(key)){
+            if(!visit[neigh]){
+                dfs(neigh,rooms,visit);
+            }
+        }
+
+    }
+
+}
