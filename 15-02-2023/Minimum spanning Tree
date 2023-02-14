@@ -1,0 +1,137 @@
+class Solution{
+
+    
+
+     class pair{
+
+        int node;
+
+        int distance;
+
+        public pair(int node,int distance){
+
+            this.node = node;
+
+            this.distance = distance;
+
+        }
+
+    }
+
+    
+
+ public int spanningTree(int V, int E, int edges[][]){
+
+     
+
+     List<List<pair>> list = new ArrayList<>();
+
+     
+
+     for(int i=0;i<V;i++){
+
+         List<pair> temp = new ArrayList<>();
+
+         list.add(temp);
+
+         
+
+     }
+
+     
+
+     for(int i=0;i<edges.length;i++){
+
+         
+
+             list.get(edges[i][0]).add(new pair(edges[i][1],edges[i][2]));
+
+             list.get(edges[i][1]).add(new pair(edges[i][0],edges[i][2]));
+
+         
+
+     }
+
+     
+
+     PriorityQueue<pair> pq = new PriorityQueue<pair>((a,b) -> {
+
+         if(a.distance == b.distance){
+
+             return a.node - b.node;
+
+         }
+
+         return a.distance - b.distance;
+
+     });
+
+     
+
+     int[] vis = new int[V];
+
+     
+
+     // adding the inital pair in the priority queue
+
+     pq.add(new pair(0,0));
+
+     int sum = 0;
+
+   
+
+     while(pq.size() != 0){
+
+         int node = pq.peek().node;
+
+         int distance = pq.peek().distance;
+
+         pq.poll();
+
+         
+
+         if(vis[node] == 1) continue;
+
+         
+
+         // increase sum of mst by the weight of recently added node
+
+         sum += distance;
+
+         vis[node] = 1;
+
+         
+
+         for(int i=0;i<list.get(node).size();i++){
+
+                
+
+                 int adjNode = list.get(node).get(i).node;
+
+                 int adjW = list.get(node).get(i).distance;
+
+               
+
+                 if(vis[adjNode] != 1){
+
+                     pq.add(new pair(adjNode,adjW));
+
+                 }
+
+             
+
+         }
+
+         
+
+         
+
+     }
+
+     
+
+     return sum;
+
+ }
+
+}
